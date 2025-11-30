@@ -13,7 +13,6 @@ public abstract class BaseIntegrationTest {
 
     @BeforeEach
     void beforeEach() {
-        // Equivalente al truncate del enunciado
         jdbcTemplate.execute("DELETE FROM tweets");
         jdbcTemplate.execute("DELETE FROM usuarios");
     }

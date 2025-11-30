@@ -22,15 +22,13 @@ class TweetWebIntegrationTest extends BaseIntegrationTest {
     @Test
     @DisplayName("Crear tweet y listar en home funciona correctamente")
     void crearTweet_listarHome_funcionaCorrectamente() {
-        // Setup
+
         var usuario = new Usuario("testuser");
         usuarioRepository.save(usuario);
 
-        // Ejercitación
         var tweet = tweetService.crearTweet(usuario.id(), "Mi primer tweet de integración");
         var homePage = tweetService.listarTweetsOriginales(PageRequest.of(0, 10));
 
-        // Verificación
         assertNotNull(tweet, "El tweet no debería ser nulo");
         assertEquals("Mi primer tweet de integración", tweet.texto());
         assertEquals(1, homePage.getTotalElements(), "Debería haber 1 tweet en el home");
@@ -40,7 +38,7 @@ class TweetWebIntegrationTest extends BaseIntegrationTest {
     @Test
     @DisplayName("Crear retweet no aparece en home pero sí en tweets del usuario")
     void crearRetweet_noApareceEnHome_apareceEnUsuario() {
-        // Setup
+
         var usuario1 = new Usuario("usuario1");
         var usuario2 = new Usuario("usuario2");
         usuarioRepository.save(usuario1);
@@ -48,12 +46,10 @@ class TweetWebIntegrationTest extends BaseIntegrationTest {
 
         var tweetOriginal = tweetService.crearTweet(usuario1.id(), "Tweet original");
 
-        // Ejercitación
         var retweet = tweetService.crearRetweet(usuario2.id(), tweetOriginal.id());
         var homePage = tweetService.listarTweetsOriginales(PageRequest.of(0, 10));
         var usuario2Tweets = tweetService.listarTweetsPorUsuario(usuario2.id(), PageRequest.of(0, 15));
 
-        // Verificación
         assertTrue(retweet.esRetweet(), "Debería ser un retweet");
         assertEquals(1, homePage.getTotalElements(), "Solo debería haber 1 tweet original en el home");
         assertEquals(tweetOriginal.id(), homePage.getContent().get(0).id(), "El tweet en home debería ser el original");
@@ -64,20 +60,17 @@ class TweetWebIntegrationTest extends BaseIntegrationTest {
     @Test
     @DisplayName("Paginación funciona correctamente")
     void paginacion_funcionaCorrectamente() {
-        // Setup
+
         var usuario = new Usuario("testuser");
         usuarioRepository.save(usuario);
 
-        // Crear 15 tweets
         for (int i = 1; i <= 15; i++) {
             tweetService.crearTweet(usuario.id(), "Tweet número " + i);
         }
 
-        // Ejercitación
         var pagina1 = tweetService.listarTweetsOriginales(PageRequest.of(0, 10));
         var pagina2 = tweetService.listarTweetsOriginales(PageRequest.of(1, 10));
 
-        // Verificación
         assertEquals(15, pagina1.getTotalElements(), "Debería haber 15 tweets en total");
         assertEquals(10, pagina1.getContent().size(), "La primera página debería tener 10 tweets");
         assertEquals(5, pagina2.getContent().size(), "La segunda página debería tener 5 tweets");
