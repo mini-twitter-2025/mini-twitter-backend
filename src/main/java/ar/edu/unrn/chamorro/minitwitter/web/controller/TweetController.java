@@ -33,7 +33,6 @@ public class TweetController {
         return TweetMapper.toResponse(retweet);
     }
 
-    // Home: tweets originales paginados de a 10
     @GetMapping("/home")
     public Page<TweetResponse> listarHome(@RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "10") int size) {
@@ -42,7 +41,6 @@ public class TweetController {
                 .map(TweetMapper::toResponse);
     }
 
-    // Tweets de un usuario (últimos 15, con "Mostrar más" por página)
     @GetMapping("/usuario/{usuarioId}")
     public Page<TweetResponse> listarPorUsuario(@PathVariable Long usuarioId,
                                                 @RequestParam(defaultValue = "0") int page,

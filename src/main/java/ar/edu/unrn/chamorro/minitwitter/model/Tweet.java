@@ -33,7 +33,6 @@ public class Tweet {
         // JPA
     }
 
-    // Tweet original
     public Tweet(Usuario autor, String texto) {
         assertAutorValido(autor);
         assertTextoValido(texto);
@@ -53,7 +52,6 @@ public class Tweet {
         var retweet = new Tweet();
         retweet.autor = autorRetweet;
         retweet.tweetOrigen = tweetOriginal;
-        // No hay texto adicional: se copia el texto original
         retweet.texto = tweetOriginal.texto;
         retweet.fechaCreacion = LocalDateTime.now();
 
@@ -89,7 +87,6 @@ public class Tweet {
         }
     }
 
-    // Métodos de consulta estilo dominio (no getX)
     public Long id() {
         return id;
     }

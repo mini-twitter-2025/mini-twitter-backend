@@ -22,7 +22,6 @@ public class UsuarioController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario crear(@RequestBody CrearUsuarioRequest request) {
-        // Para simplificar devolvemos el dominio. Si querés, podés mapear a DTO también.
         return usuarioService.crearUsuario(request.userName());
     }
 
