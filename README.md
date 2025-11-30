@@ -132,18 +132,18 @@ El reporte de cobertura se genera automáticamente en `target/site/jacoco/index.
 
 | Método | Endpoint | Descripción | Body |
 |--------|----------|-------------|------|
-| POST | `/api/usuarios` | Crear usuario | `{"userName":"nombre"}` |
-| GET | `/api/usuarios` | Listar todos los usuarios | - |
-| DELETE | `/api/usuarios/{id}` | Eliminar usuario | - |
+| POST | `/usuarios` | Crear usuario | `{"userName":"nombre"}` |
+| GET | `/usuarios` | Listar todos los usuarios | - |
+| DELETE | `/usuarios/{id}` | Eliminar usuario | - |
 
 ### Tweets
 
 | Método | Endpoint | Descripción | Body |
 |--------|----------|-------------|------|
-| POST | `/api/tweets` | Crear tweet | `{"usuarioId":1,"texto":"..."}` |
-| POST | `/api/tweets/{id}/retweet` | Hacer retweet | `{"usuarioId":2}` |
-| GET | `/api/tweets/home?page=0&size=10` | Timeline home (solo originales) | - |
-| GET | `/api/tweets/usuario/{id}?page=0&size=15` | Tweets de usuario | - |
+| POST | `/tweets` | Crear tweet | `{"usuarioId":1,"texto":"..."}` |
+| POST | `/tweets/{id}/retweet` | Hacer retweet | `{"usuarioId":2}` |
+| GET | `/tweets/home?page=0&size=10` | Timeline home (solo originales) | - |
+| GET | `/tweets/usuario/{id}?page=0&size=15` | Tweets de usuario | - |
 
 ## 💻 Ejemplos de Uso
 
@@ -152,7 +152,7 @@ El reporte de cobertura se genera automáticamente en `target/site/jacoco/index.
 #### 1. Crear un usuario
 
 ```powershell
-Invoke-RestMethod -Uri "http://localhost:8080/api/usuarios" `
+Invoke-RestMethod -Uri "http://localhost:8080/usuarios" `
   -Method POST `
   -ContentType "application/json" `
   -Body '{"userName":"alice01"}'
@@ -161,7 +161,7 @@ Invoke-RestMethod -Uri "http://localhost:8080/api/usuarios" `
 #### 2. Crear un tweet
 
 ```powershell
-Invoke-RestMethod -Uri "http://localhost:8080/api/tweets" `
+Invoke-RestMethod -Uri "http://localhost:8080/tweets" `
   -Method POST `
   -ContentType "application/json" `
   -Body '{"usuarioId":1,"texto":"Mi primer tweet!"}'
@@ -170,20 +170,20 @@ Invoke-RestMethod -Uri "http://localhost:8080/api/tweets" `
 #### 3. Ver timeline home
 
 ```powershell
-Invoke-RestMethod -Uri "http://localhost:8080/api/tweets/home" -Method GET
+Invoke-RestMethod -Uri "http://localhost:8080/tweets/home" -Method GET
 ```
 
 #### 4. Hacer un retweet
 
 ```powershell
 # Primero crear otro usuario
-Invoke-RestMethod -Uri "http://localhost:8080/api/usuarios" `
+Invoke-RestMethod -Uri "http://localhost:8080/usuarios" `
   -Method POST `
   -ContentType "application/json" `
   -Body '{"userName":"bob_user"}'
 
 # Luego hacer retweet del tweet con ID 1
-Invoke-RestMethod -Uri "http://localhost:8080/api/tweets/1/retweet" `
+Invoke-RestMethod -Uri "http://localhost:8080/tweets/1/retweet" `
   -Method POST `
   -ContentType "application/json" `
   -Body '{"usuarioId":2}'
@@ -193,17 +193,17 @@ Invoke-RestMethod -Uri "http://localhost:8080/api/tweets/1/retweet" `
 
 ```bash
 # Crear usuario
-curl -X POST http://localhost:8080/api/usuarios \
+curl -X POST http://localhost:8080/usuarios \
   -H "Content-Type: application/json" \
   -d '{"userName":"testuser"}'
 
 # Crear tweet
-curl -X POST http://localhost:8080/api/tweets \
+curl -X POST http://localhost:8080/tweets \
   -H "Content-Type: application/json" \
   -d '{"usuarioId":1,"texto":"Hola mundo!"}'
 
 # Ver timeline
-curl http://localhost:8080/api/tweets/home
+curl http://localhost:8080/tweets/home
 ```
 
 ## 🗄️ Base de Datos
